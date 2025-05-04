@@ -22,9 +22,10 @@ public class Banker {
 	 * <p>
 	 * It is synchronized in order to prevent race conditions.
 	 * </p>
-	 * @return 1 if the release is succesfull, and -1 if the request is denied, and
+	 * 
+	 * @return 1 if the release is succesfull, and -1 if the request is deniedand
 	 * @param customer The customer code/index
-	 * @param release The amount of instances of each resource to be released
+	 * @param release  The amount of instances of each resource to be released
 	 */
 	public synchronized int releaseResources(int customer, int[] release) {
 
@@ -48,17 +49,19 @@ public class Banker {
 	 * Requests the parameterized amount of resources of each type.
 	 * </p>
 	 * <p>
-	 * If the request is approved, the requested resources are allocated to the parameterized customer.
+	 * If the request is approved, the requested resources are allocated to the
+	 * parameterized customer.
 	 * </p>
 	 * <p>
-	 * if the request exceeds the maximum request or may lead to an unsafe state (e.g. deadlock), the request is denied
+	 * if the request exceeds the maximum request or may lead to an unsafe state
+	 * (e.g. deadlock), the request is denied
 	 * </p>
 	 * <p>
 	 * It is synchronized in order to prevent race conditions.
 	 * </p>
 	 * @return 1 if the request is succesfull, and -1 if the request is denied, and
 	 * @param customer The customer code/index
-	 * @param request The amount of instances of each resource to be requested
+	 * @param request  The amount of instances of each resource to be requested
 	 */
 	public synchronized int requestResources(int customer, int[] request) {
 
@@ -176,14 +179,14 @@ public class Banker {
 	}
 
 	public synchronized int[] getMax(int customer) throws IndexOutOfBoundsException {
-		if((customer < 0) || (customer >= maximum.length)) {
+		if ((customer < 0) || (customer >= maximum.length)) {
 			throw new IndexOutOfBoundsException();
 		}
 		return maximum[customer].clone();
 	}
-	
+
 	public synchronized int[] getAllocation(int customer) throws IndexOutOfBoundsException {
-		if((customer < 0) || (customer >= allocation.length)) {
+		if ((customer < 0) || (customer >= allocation.length)) {
 			throw new IndexOutOfBoundsException();
 		}
 		return allocation[customer].clone();
@@ -202,5 +205,5 @@ public class Banker {
 		}
 		return allocation[customer][resource];
 	}
-	
+
 }

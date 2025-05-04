@@ -41,8 +41,8 @@ public class Customer implements Runnable {
 
 				Thread.sleep(10 * 1000);
 				
-				// Caso todo cliente libere os mesmos recursos recentemente alocados logo após o uso, sem retenção extendida
-				//int[] randRelease = banker.getMax(customerCode);
+				// Caso todo cliente libere os mesmos recursos recentemente alocados logo após o uso, sem retenção estendida
+				//int[] randRelease = randReq.clone();
 
 				//Caso todo cliente libere uma quantidade aleatória de recursos logo após o uso
 				int[] randRelease = new int[resCount];
