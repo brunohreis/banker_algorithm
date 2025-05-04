@@ -15,6 +15,10 @@ Esse projeto consiste numa implementação do Algoritmo do Banqueiro, em que exi
    <pre>
    git clone https://github.com/brunohreis/banker_algorithm.git
    </pre>
+2. **Vá para o diretório dos arquivos de código-fonte:
+   <pre>
+   cd banker_algorithm/BankerAlgorithm/src/
+   </pre>
 2. **Compile os arquivos java**:
 	<pre>
    javac *.java
