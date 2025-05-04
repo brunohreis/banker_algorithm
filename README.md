@@ -23,7 +23,7 @@ Esse projeto consiste numa implementação do Algoritmo do Banqueiro, em que exi
 	<pre>
    javac *.java
    </pre>
-3. **Execute o programa** passando como parâmetro (1°) a qtd de clientes e as quantidades de instâncias disponíveis de cada tipo de recurso:
+3. **Execute o programa** passando como parâmetro (1°) a quantidade de clientes e as quantidades de instâncias disponíveis de cada tipo de recurso:
 	<pre>
    java Main 5 13 14 15
    </pre>
