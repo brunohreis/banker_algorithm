@@ -13,20 +13,14 @@ Esse projeto consiste numa implementação do Algoritmo do Banqueiro, em que exi
 
 1. **Clone o repositório** (ou baixe os arquivos manualmente):
    <pre>
-   ```bash
    git clone https://github.com/brunohreis/banker_algorithm.git
-   ```
    </pre>
 2. **Compile os arquivos java**:
 	<pre>
-   ```bash
    javac *.java
-   ```
    </pre>
 3. **Execute o programa** passando como parâmetro (1°) a qtd de clientes e as quantidades de instâncias disponíveis de cada tipo de recurso:
 	<pre>
-   ```bash
    java Main 5 13 14 15
-   ```
    </pre>
 (Nesse caso, existem 5 clientes, e o recurso 0 tem 13 instâncias, o recurso 1 tem 14 instâncias e o recurso 2 tem 15 instâncias)
