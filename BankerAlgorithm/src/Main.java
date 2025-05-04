@@ -29,7 +29,7 @@ public class Main {
 				 */
 				for (int i = 0; i < maximum.length; i++) {
 					for (int j = 0; j < maximum[0].length; j++) {
-						int max = rd.nextInt(available[j]);
+						int max = rd.nextInt(available[j] + 1);
 						maximum[i][j] = need[i][j] = max;
 					}
 				}

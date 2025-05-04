@@ -14,9 +14,17 @@ public class Banker {
 		this.available = available;
 	}
 
-	/*
-	 * returns 1 if the release is succesfull, and is synchronized in order to
-	 * prevent race conditions
+	/**
+	 * 
+	 * <p>
+	 * Releases the parameterized amount of resources of each type
+	 * </p>
+	 * <p>
+	 * It is synchronized in order to prevent race conditions.
+	 * </p>
+	 * @return 1 if the release is succesfull, and -1 if the request is denied, and
+	 * @param customer The customer code/index
+	 * @param release The amount of instances of each resource to be released
 	 */
 	public synchronized int releaseResources(int customer, int[] release) {
 
@@ -27,29 +35,42 @@ public class Banker {
 		// need = need + release
 		need[customer] = sumArrays(need[customer], release);
 
-		System.out.println("The customer " + customer + " makes the following release: ");
+		System.out.println("\nThe customer " + customer + " makes the following release: ");
 		for (int i = 0; i < resourcesCount; i++) {
-			System.out.println("Resource " + i + ": " + release[i] + " instances.\t");
+			System.out.print("Resource " + i + ": " + release[i] + " instances.\t");
 		}
 
 		return 1;
 	}
 
-	/*
-	 * returns 1 if the request is succesfull, and -1 if the request is denied, and
-	 * is synchronized in order to prevent race conditions
+	/**
+	 * <p>
+	 * Requests the parameterized amount of resources of each type.
+	 * </p>
+	 * <p>
+	 * If the request is approved, the requested resources are allocated to the parameterized customer.
+	 * </p>
+	 * <p>
+	 * if the request exceeds the maximum request or may lead to an unsafe state (e.g. deadlock), the request is denied
+	 * </p>
+	 * <p>
+	 * It is synchronized in order to prevent race conditions.
+	 * </p>
+	 * @return 1 if the request is succesfull, and -1 if the request is denied, and
+	 * @param customer The customer code/index
+	 * @param request The amount of instances of each resource to be requested
 	 */
 	public synchronized int requestResources(int customer, int[] request) {
+
+		System.out.println("\nThe customer " + customer + " makes the following request: ");
+		for (int i = 0; i < resourcesCount; i++) {
+			System.out.print("Resource " + i + ": " + request[i] + " instances.\t");
+		}
+
 		/*
 		 * The resources can only be provided if the customer doesn't exceed its maximum
 		 * request and there are enough available resources at the moment
 		 */
-
-		System.out.println("The customer " + customer + " makes the following request: ");
-		for (int i = 0; i < resourcesCount; i++) {
-			System.out.println("Resource " + i + ": " + request[i] + " instances.\t");
-		}
-
 		if (isMinorOrEqual(request, need[customer]) && isMinorOrEqual(request, available)) {
 			// the allocation is simulated in order to test if the system is still safe
 
@@ -154,15 +175,32 @@ public class Banker {
 		return maximum;
 	}
 
-	public synchronized int[] getMax(int customer) {
-		return maximum[customer];
+	public synchronized int[] getMax(int customer) throws IndexOutOfBoundsException {
+		if((customer < 0) || (customer >= maximum.length)) {
+			throw new IndexOutOfBoundsException();
+		}
+		return maximum[customer].clone();
+	}
+	
+	public synchronized int[] getAllocation(int customer) throws IndexOutOfBoundsException {
+		if((customer < 0) || (customer >= allocation.length)) {
+			throw new IndexOutOfBoundsException();
+		}
+		return allocation[customer].clone();
 	}
 
-	public synchronized int getMax(int customer, int resource) {
+	public synchronized int getMax(int customer, int resource) throws IndexOutOfBoundsException {
+		if ((customer < 0) || (customer >= maximum.length) || (resource < 0) || (resource >= maximum[0].length)) {
+			throw new IndexOutOfBoundsException();
+		}
 		return maximum[customer][resource];
 	}
 
-	public synchronized int getAllocation(int customer, int resource) {
+	public synchronized int getAllocation(int customer, int resource) throws IndexOutOfBoundsException {
+		if ((customer < 0) || (customer >= allocation.length) || (resource < 0) || (resource >= allocation[0].length)) {
+			throw new IndexOutOfBoundsException();
+		}
 		return allocation[customer][resource];
 	}
+	
 }
