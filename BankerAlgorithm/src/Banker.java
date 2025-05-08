@@ -3,6 +3,9 @@ public class Banker {
 	private int customersCount, resourcesCount;
 	private int[][] maximum, allocation, need;
 	private int[] available;
+	
+	// This object guarantees mutual exclusion when printing to the console
+	private static final Object printLock = new Object();
 
 	public Banker(int customersCount, int resourcesCount, int[][] maximum, int[][] allocation, int[][] need,
 			int[] available) {
@@ -36,9 +39,9 @@ public class Banker {
 		// need = need + release
 		need[customer] = sumArrays(need[customer], release);
 
-		System.out.println("\nThe customer " + customer + " makes the following release: ");
+		printlnSynchronized("\nThe customer " + customer + " makes the following release: ");
 		for (int i = 0; i < resourcesCount; i++) {
-			System.out.print("Resource " + i + ": " + release[i] + " instances.\t");
+			printSynchronized("Resource " + i + ": " + release[i] + " instances.\t");
 		}
 
 		return 1;
@@ -65,9 +68,9 @@ public class Banker {
 	 */
 	public synchronized int requestResources(int customer, int[] request) {
 
-		System.out.println("\nThe customer " + customer + " makes the following request: ");
+		printlnSynchronized("\nThe customer " + customer + " makes the following request: ");
 		for (int i = 0; i < resourcesCount; i++) {
-			System.out.print("Resource " + i + ": " + request[i] + " instances.\t");
+			printSynchronized("Resource " + i + ": " + request[i] + " instances.\t");
 		}
 
 		/*
@@ -85,7 +88,7 @@ public class Banker {
 			need[customer] = decreaseArrays(need[customer], request);
 
 			if (isSafe()) {
-				System.out.println("\nWhich has been accepted.");
+				printlnSynchronized("\nWhich has been accepted.");
 				return 1;
 			} else {
 				/*
@@ -102,7 +105,7 @@ public class Banker {
 
 			}
 		}
-		System.out.println("\nWhich has been denied.");
+		printlnSynchronized("\nWhich has been denied.");
 		return -1;
 	}
 
@@ -204,6 +207,14 @@ public class Banker {
 			throw new IndexOutOfBoundsException();
 		}
 		return allocation[customer][resource];
+	}
+	
+	private void printSynchronized(String s) {
+		System.out.print(s);
+	}
+	
+	private void printlnSynchronized(String s) {
+		System.out.println(s);
 	}
 
 }
